@@ -1,0 +1,251 @@
+<template>
+    <div class="multi-upload-container">
+        <label>Документація</label>
+        <div class="documents-wrapper">
+            <input type="file"
+            ref="fileInputRef"
+            multiple
+            style="display: none;"
+            @change="handleFilesAdd"
+            />
+            <div class="upload-zone"
+            @click="triggerInput">
+            <span class="trigger">+ Додати файл (PDF, TXT, IMG, OBJ...)</span>
+            </div>
+        <ul v-if="selectedFiles.length > 0" class="file-list">
+            <li v-for="(file, index) in selectedFiles" :key="index" class="file-item">
+                
+                <span :class="['file-badge', getBadgeColorClass(getExtension(file.name))]">
+                    {{ getExtension(file.name) }}
+                </span>
+                
+                <div class="file-text">
+                    <span class="file-name" :title="file.name">{{ file.name }}</span>
+                    <span class="file-size">{{ (file.size/1024).toFixed(1) }} KB</span>
+                </div>
+                
+                <button class="del-btn" @click.prevent="removeFile(index)">✕</button>
+                
+            </li>
+        </ul>
+        </div>
+    </div>
+</template>
+<script setup>
+import { ref } from 'vue';
+import { useModalStore } from './modalStore';
+import { storeToRefs } from 'pinia';
+
+const useStore = useModalStore();
+const {selectedFiles } = storeToRefs(useStore);
+const fileInputRef = ref(null);
+
+const triggerInput = () => {
+    if(fileInputRef) fileInputRef.value.click();
+};
+
+const getExtension = (filename) => {
+    // Перевіряємо, чи взагалі є крапка у назві (іноді файли бувають без розширення)
+    if (!filename || !filename.includes('.')) return 'FILE';
+    
+    // Розбиваємо рядок по крапці і беремо останній елемент. 
+    // toUpperCase() робить його великими літерами (pdf -> PDF)
+    return filename.split('.').pop().toUpperCase();
+}
+
+const handleFilesAdd = (event) => {
+    const incomingFiles = Array.from(event.target.files);
+    if(incomingFiles.length === 0) return;
+
+    selectedFiles.value = [...selectedFiles.value, ...incomingFiles];
+    event.target.value = '';
+
+};
+
+const removeFile = (index) =>{
+    selectedFiles.value.splice(index, 1);
+}
+
+// ... ваші попередні імпорти та функції
+
+const getBadgeColorClass = (extension) => {
+    // Словник розширень та їхніх класів
+    const colorMap = {
+        'PDF': 'badge-red',
+        'TXT': 'badge-gray',
+        'JSON': 'badge-yellow',
+        'XML': 'badge-yellow',
+        'JPG': 'badge-blue',
+        'JPEG': 'badge-blue',
+        'PNG': 'badge-blue',
+        'SVG': 'badge-blue',
+        'OBJ': 'badge-orange',
+        'STL': 'badge-orange',
+        'ZIP': 'badge-red',
+        'RAR': 'badge-red'
+    };
+
+    // Якщо розширення є в словнику - повертаємо його клас. 
+    // Якщо немає - повертаємо базовий фіолетовий (badge-default)
+    return colorMap[extension] || 'badge-default';
+};
+</script>
+<style scoped>
+.multi-upload-container{
+    display: flex;
+    flex-direction: column;
+    
+}
+label{
+    color: whitesmoke;
+    font-weight: 900;
+    margin-bottom: 5px;
+}
+.documents-wrapper{
+    border: 2px dashed black;
+    background-color: var(--color-surface, #1e1e1e);
+    height: 130px;
+    padding: 10px;
+}
+span{
+    color: #94A3B8;
+    font-size: medium;
+    font-weight: 200;
+}
+.upload-zone{
+    display: flex;
+    
+}
+.file-list {
+display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    row-gap: 5px;
+    max-height: 90px; /* Обмеження висоти (~3 рядки) */
+    overflow-y: auto;  /* Вмикаємо прокрутку, якщо карток більше */
+    padding-right: 8px; /* Робимо відступ, щоб скролбар не налізав на текст */
+    align-content: start;
+    padding: 10px; /* Відступ всередині dashed-контейнера */
+    margin: 0;
+}
+
+/* --- САМА КАРТКА (Cyberpunk Chip) --- */
+.file-item {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Відстань між бейджем, текстом і кнопкою */
+    background-color: #1E293B; /* Світліший фон для виділення картки */
+    border: 1px solid #475569; /* Легка рамка */
+    border-radius: 6px;
+    padding: 6px 10px;
+    max-width: 250px; /* Не даємо картці розтягуватися на весь екран */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* --- БЕЙДЖ --- */
+.file-badge {
+    border-radius: 4px;
+    padding: 2px 6px;
+    font-size: 0.7rem;
+    font-weight: 900;
+    min-width: 40px; 
+    text-align: center;
+    letter-spacing: 0.5px;
+}
+
+/* --- КОЛЬОРОВІ ВАРІАЦІЇ --- */
+
+/* За замовчуванням (ваш фіолетовий Кіберпанк) */
+.badge-default {
+    background-color: rgba(157, 80, 255, 0.2); 
+    color: #9D50FF; 
+    border: 1px solid #9D50FF;
+}
+
+/* Червоний (PDF, архіви) */
+.badge-red {
+    background-color: rgba(239, 68, 68, 0.2); 
+    color: #EF4444; 
+    border: 1px solid #EF4444;
+}
+
+/* Синій (Зображення) */
+.badge-blue {
+    background-color: rgba(59, 130, 246, 0.2); 
+    color: #3B82F6; 
+    border: 1px solid #3B82F6;
+}
+
+/* Жовтий (Конфіги, JSON, XML) */
+.badge-yellow {
+    background-color: rgba(234, 179, 8, 0.2); 
+    color: #EAB308; 
+    border: 1px solid #EAB308;
+}
+
+/* Помаранчевий (3D моделі) */
+.badge-orange {
+    background-color: rgba(249, 115, 22, 0.2); 
+    color: #F97316; 
+    border: 1px solid #F97316;
+}
+
+/* Сірий (Прості текстові файли) */
+.badge-gray {
+    background-color: rgba(148, 163, 184, 0.2); 
+    color: #94A3B8; 
+    border: 1px solid #94A3B8;
+}
+
+/* --- ЦЕНТРАЛЬНА ЧАСТИНА (Текст) --- */
+.file-text {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* Важливо для обрізки довгого тексту */
+    flex-grow: 1; /* Текст займає весь вільний простір між бейджем і кнопкою */
+}
+
+.file-name {
+    color: whitesmoke;
+    font-size: 0.85rem;
+    font-weight: 600;
+    white-space: nowrap; /* Забороняємо тексту переноситися на 2 рядки */
+    overflow: hidden; 
+    text-overflow: ellipsis; /* Додаємо "..." в кінці довгого тексту */
+}
+
+.file-size {
+    color: #94A3B8;
+    font-size: 0.7rem;
+}
+
+/* --- КНОПКА ВИДАЛЕННЯ --- */
+.del-btn {
+    background-color: transparent;
+    color: #EF4444; /* Червоний колір помилки/видалення */
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.del-btn:hover {
+    background-color: rgba(239, 68, 68, 0.2); /* Легкий червоний фон при наведенні */
+}
+
+.trigger{
+    border: 1px solid  #9c50ff96;
+    border-radius: 5px;
+    padding: 5px;
+    text-align: center;
+    width: 100%;
+}
+.trigger:hover{
+    box-shadow: 0 0 5px rgba(0, 255, 65, 0.5), 
+              0 0 15px rgba(0, 255, 65, 0.4);
+}
+</style>

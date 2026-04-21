@@ -1,0 +1,22 @@
+:root{
+  --color-bg-main: #101018;
+  --color-warning: #FFA500;
+  --color-accenet: #9D50FF;
+  --color-accent-neon: #00E0FF;
+  --color-text-primary: #E2E8F0;
+  --color-text-secondary: #94A3B8;
+  --color-surface: #1E293B;
+  font-family: "Montserrat", sans-serif;
+}
+body {
+  background-color: var(--color-bg-main);
+  color: var(--color-text-primary);
+  margin: 0;
+  padding: 0;
+}
+
+.montserrat {
+  font-optical-sizing: auto;
+  font-weight: normal;
+  font-style: normal;
+}

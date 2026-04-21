@@ -1,0 +1,18 @@
+# Spring Boot
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+*.jar
+
+# Vue.js
+frontend/node_modules/
+frontend/dist/
+frontend/dist-ssr/
+*.local
+
+# Environment & IDE
+.env
+.idea/
+.vscode/
+*.swp
