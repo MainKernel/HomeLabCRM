@@ -1,57 +1,20 @@
 <template>
-    <div class="input-field-container">
-        <label>Тип</label>
-        <div class="input-wrapper">
-            <select v-model="formData.type" id="2">
-                <option value="UNIQUE">УНІКАЛЬНИЙ</option>
-                <option value="REUGLAR" selected>ЗВИЧАЙНИЙ</option>
-            </select>
-        </div>
+  <div class="input-field-container">
+    <label>Тип</label>
+    <div class="input-wrapper">
+      <select id="2" v-model="formData.type">
+        <option value="UNIQUE">УНІКАЛЬНИЙ</option>
+        <option value="REGULAR">ЗВИЧАЙНИЙ</option>
+      </select>
     </div>
+  </div>
 </template>
 <script setup>
-import { useModalStore } from './modalStore';
-import { storeToRefs } from 'pinia';
+import {useModalStore} from './modalStore';
+import {storeToRefs} from 'pinia';
 
-const useStore = useModalStore ()
+const useStore = useModalStore()
 const {formData} = storeToRefs(useStore)
 
 </script>
-<style scoped>
-.input-field-container{
-    display: flex;
-    flex-direction: column;
-}
-label{
-    padding-left: 10px;
-    margin-right: 5px;
-    color: whitesmoke;
-    font-weight: 900;
-}
-select{
-    margin-top: 5px;
-    padding-right: 5px;
-    margin-left: 5px;
-    margin-right: 5px;
-    color: whitesmoke;
-    background-color: var(--color-surface, #1e1e1e);
-    border: 2px solid #9c50ff8d;
-    min-height: 25px;
-    padding-left: 5px;
-    border-radius: 5px;
-    width: 100%;
-    box-sizing: border-box;
-    
-}
-.input-wrapper{
-    margin-top: 5px;
-    margin-left: 5px;
-    margin-right: 5px;
-    padding-right: 5px;
-}
-select:focus{
-    outline: none;
-    box-shadow: 0 0 5px rgba(0, 255, 65, 0.5), 
-              0 0 15px rgba(0, 255, 65, 0.4);
-}
-</style>
+<style scoped src="./style/typefieldcomponent.css"></style>

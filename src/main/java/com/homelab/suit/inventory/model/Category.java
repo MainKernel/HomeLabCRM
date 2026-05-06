@@ -19,6 +19,9 @@ public class Category {
     @Column(nullable = false)
     private String name;
 
+    @Column(nullable = false)
+    private Long workspaceId;
+
     // Зв'язок із батьківською категорією (Many-to-One)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id")

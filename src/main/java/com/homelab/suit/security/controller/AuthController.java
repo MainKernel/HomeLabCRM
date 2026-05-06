@@ -29,7 +29,7 @@ public class AuthController {
                 )
         );
 
-        String jwtToken = jwtUtils.generateJwtToken(loginRequest.getEmail());
+        String jwtToken = jwtUtils.generateJwtToken(authentication);
 
         return ResponseEntity.ok(Map.of("token", jwtToken));
     }

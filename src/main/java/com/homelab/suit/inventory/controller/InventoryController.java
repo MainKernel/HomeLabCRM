@@ -1,11 +1,9 @@
 package com.homelab.suit.inventory.controller;
 
-import com.homelab.suit.inventory.dto.CategoryDto;
-import com.homelab.suit.inventory.dto.ItemCreationDto;
-import com.homelab.suit.inventory.dto.LocationDto;
-import com.homelab.suit.inventory.dto.TableItemRequestDto;
+import com.homelab.suit.inventory.dto.*;
 import com.homelab.suit.inventory.model.*;
 import com.homelab.suit.inventory.service.ItemService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 import org.springdoc.core.annotations.ParameterObject;
@@ -19,6 +17,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.security.Principal;
 import java.util.Arrays;
 import java.util.List;
 
@@ -31,7 +30,7 @@ public class InventoryController {
 
     @GetMapping
     public Page<TableItemRequestDto> getTablePage(
-            @RequestHeader(value = "X-Workspace-Id", defaultValue = "1") Long workspaceId,
+            @RequestHeader(value = "X-Workspace-Id") Long workspaceId,
             @RequestParam(required = false) String search,
             @ParameterObject @PageableDefault(size = 10, sort = "id") Pageable pageable
     ) {
@@ -42,27 +41,42 @@ public class InventoryController {
         }
     }
     @GetMapping("/categories")
-    public List<CategoryDto> getCategories(){
-        return itemService.getCategories();
+    public List<CategoryDto> getCategories(
+            @RequestHeader(value = "X-Workspace-Id", defaultValue = "1") Long workspaceId){
+        return itemService.getCategories(workspaceId);
     }
     @GetMapping("/locations")
-    public List<LocationDto> getLocations(){
-        return itemService.getLocations();
+    public List<LocationDto> getLocations(
+            @RequestHeader(value = "X-Workspace-Id", defaultValue = "1") Long workspaceId
+    ){
+        return itemService.getLocations(workspaceId);
     }
     @GetMapping("/item/{id}")
     public Item getItemById(@PathVariable Long id){
+
         return itemService.getItemById(id);
+    }
+
+    @PutMapping("/item/{id}")
+    public ResponseEntity<?> updateItem(
+            @PathVariable Long id,
+            @Valid @RequestPart("itemDetails") ItemUpdateDto itemUpdateDto,
+            @RequestPart (value = "imageFile", required = false) MultipartFile newImage,
+            @RequestPart(value = "newDocuments", required = false) List<MultipartFile> newDocuments,
+            Principal principal
+    ){
+        itemService.updateItem(itemUpdateDto, newImage, newDocuments, principal);
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> createItemWithFiles(
-            @RequestPart("itemDetails")ItemCreationDto itemCreationDto,
+            @Valid @RequestPart("itemDetails")ItemCreationDto itemCreationDto,
             @RequestPart(value = "imageFile", required = false) MultipartFile imageFile,
-            @RequestPart(value = "documents", required = false) List<MultipartFile> documents
+            @RequestPart(value = "documents", required = false) List<MultipartFile> documents,
+            Principal principal
             ){
-        System.out.println(itemCreationDto.toString());
-        System.out.println(imageFile.getName());
-        System.out.println(documents.toString());
+        itemService.saveNewItem(itemCreationDto, imageFile, documents, principal);
         return ResponseEntity.ok().build();
     }
 }

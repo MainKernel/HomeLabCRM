@@ -1,24 +1,37 @@
 <template>
-    <button>
-        <img src="../../public/edit-button.svg" 
-        alt="Редагувати" 
-        height="25px" 
-        width="25px"
-        @click="openEditModal = true"
-        />
-    </button>
+  <button>
+    <img alt="Редагувати"
+         height="25px"
+         src="../../public/edit-button.svg"
+         width="25px"
+         @click.prevent="goToItem(itemId)"
+    />
+  </button>
 </template>
 <script setup>
+import {useRouter} from "vue-router";
+
 defineProps({
-  item: Number  
+  itemId: Number
 })
+
+const router = useRouter();
+
+const goToItem = (itemId) => {
+  router.push(`inventory/item/${itemId}`);
+}
 
 </script>
 <style scoped>
-button{
-    background-color: transparent;
-    border: none;
-    margin: 0px;
-    padding: 0px;
+button {
+  background-color: transparent;
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+img:hover {
+  border: 3px dashed black;
+  border-radius: 5px;
 }
 </style>

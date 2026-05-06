@@ -36,6 +36,7 @@ public class InventoryLog {
     private BigDecimal totalPrice;
 
     private String note;
+    private String changedBy;
 
     @Column(nullable = false, updatable = false)
     private OffsetDateTime createdAt;

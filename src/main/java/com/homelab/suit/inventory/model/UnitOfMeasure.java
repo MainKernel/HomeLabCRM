@@ -7,4 +7,5 @@ public enum UnitOfMeasure {
     KG,      // Кілограми
     PACK,
     UDEF,
+
 }

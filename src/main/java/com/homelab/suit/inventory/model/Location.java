@@ -14,7 +14,7 @@ public class Location {
 
     @Column(nullable = false)
     private String name; // Наприклад: "Стелаж 1", "Коробка з ESP32"
-
+    @Column(nullable = false)
     private Long workspaceId;
 
     private String description;

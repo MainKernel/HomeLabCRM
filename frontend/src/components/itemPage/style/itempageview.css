@@ -1,0 +1,421 @@
+.page-header {
+    display: flex;
+    padding: 1vw 2vw 0.5vw;
+    flex-direction: row;
+    width: 90%;
+
+}
+
+.editing-box {
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 0.5vw;
+    position: sticky;
+    top: 0;
+    z-index: 20;
+}
+
+.item-name {
+    background: none;
+    border: 1px solid red;
+    border-radius: 10px;
+    color: white;
+
+}
+
+.item-img {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    background-size: cover;
+    background: #2b2b2b;
+    border-radius: 1vw;
+    padding: 0.5vw;
+
+}
+
+.item-name:disabled {
+    border: none;
+}
+
+.content {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.item-header {
+    height: 3vw;
+    display: flex;
+    flex-direction: row;
+    background: #323232;
+    border-top-left-radius: 1em;
+    border-top-right-radius: 1em;
+    position: sticky;
+    top: 40px;
+    z-index: 20;
+}
+
+.item-name {
+    display: flex;
+    justify-self: center;
+    align-items: center;
+    padding-left: 1vw;
+    margin: 0.2vw;
+    font-size: 2vw;
+    font-weight: bold;
+    width: 50%;
+}
+
+.main-content {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(5px);
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Колонки залишаємо рівними (це ок) */
+
+    /* ВИПРАВЛЕННЯ: */
+    /* Замість repeat(6, 1fr) пишемо: */
+    grid-auto-rows: auto; /* Кожен рядок займатиме рівно стільки місця, скільки треба контенту */
+    gap: 1vw; /* Додамо трохи відступу між елементами, щоб вони не злипалися */
+
+    border-bottom-left-radius: 1em;
+    border-bottom-right-radius: 1em;
+    padding: 1vw; /* Додамо паддінг, щоб контент не прилипав до країв скла */
+}
+
+.image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    /* 1. Дозволяємо блоку займати всю доступну ширину своєї колонки в гріді */
+    width: 100%;
+
+    /* 2. МАГІЯ: Задаємо пропорцію. Ви можете написати 600/240 або 5/2 */
+    aspect-ratio: 5 / 2;
+
+    /* 3. Жорстку висоту повністю прибираємо! Браузер вирахує її сам на основі ширини */
+
+    /* Додатково: щоб картинка не вилазила за межі блоку, якщо щось піде не так */
+    overflow: hidden;
+    border-radius: 1em; /* Заокруглюємо кути, щоб пасувало до дизайну */
+}
+
+.main-info {
+
+}
+
+.param-input-wrapper {
+    display: flex;
+}
+
+.param-input-wrapper input {
+    margin: 5px;
+}
+
+.param-del-btn:disabled, .param-add-btn:disabled {
+    display: none;
+}
+
+.param-add-btn {
+    border: none;
+    background: rgba(0, 255, 65, 0.5);
+    border-radius: 25%;
+    width: 40px;
+    height: 25px;
+
+}
+
+.param-del-btn {
+    border: none;
+    background: rgb(255 0 0 / 0.82);
+    border-radius: 25%;
+    width: 30px;
+    height: 20px;
+
+}
+
+.main-info-table {
+    grid-column: span 2;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(1, auto); /* <-- Тут теж можлива така сама проблема! */
+    gap: 1vw; /* Додайте gap для краси */
+}
+
+
+.main-info-box-3 {
+    grid-column: span 3;
+}
+
+.change-log {
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    outline: 1px dashed black;
+}
+
+.change-log-card {
+    border: 1px solid black;
+    border-radius: 5px;
+    margin-top: 0.5vw;
+    padding: 0.2vw;
+}
+
+::-webkit-scrollbar {
+    background-color: var(--color-surface, #1e1e1e);
+    width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #9c50ff8d;
+    border-radius: 10px;
+}
+
+
+.log-header {
+    display: flex;
+    flex-direction: row;
+    width: auto;
+    outline: 2px dashed gray;
+}
+
+.log-body p {
+    width: 100%;
+}
+
+.documents {
+    grid-column: span 2;
+}
+
+.note-wrapper {
+    grid-column: span 2;
+}
+
+.input-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.param-wrapper {
+    border: 1px dashed black;
+}
+
+.param-list {
+    height: 150px;
+    overflow-y: scroll;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1vw;
+    grid-template-rows: auto;
+}
+
+.param-holder {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.input-select-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.input-select-wrapper select {
+    width: 100%;
+    height: 2.3vw;
+    background-color: var(--color-surface, #1e1e1e);
+    border: 2px solid #9c50ff8d;
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+label {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin: 0.4vw;
+}
+
+.input-wrapper input {
+    width: 100%;
+    height: 2.3vw;
+}
+
+.input-wrapper textarea {
+    width: 95%;
+    margin: 20px;
+    padding: 0;
+    justify-content: center;
+    resize: none;
+    height: 10vw;
+    background-color: var(--color-surface, #1e1e1e);
+    color: white;
+}
+
+.change-log-card * {
+    padding: 0;
+    margin: 0;
+    width: 50%;
+}
+
+.log-header {
+    width: 100%;
+}
+
+.log-body {
+    width: 100%;
+}
+
+/* KNOB */
+/* 1. Контейнер перемикача (Трек) */
+.switch {
+    width: 5vw; /* Загальна ширина */
+    height: 2vw;
+    background: rgba(255, 255, 255, 0.05); /* Ефект темного матового скла */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 22px; /* Овальна форма-пігулка */
+    cursor: pointer;
+    padding: 4px;
+    box-sizing: border-box;
+    box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.5); /* Внутрішня тінь для глибини */
+    backdrop-filter: blur(10px);
+    -webkit-tap-highlight-color: transparent; /* Прибирає стандартне виділення на мобільних */
+}
+
+/* 2. Сама кнопка-повзунок (Knob) - Стан "Перегляд" */
+.knob {
+    /* Ширина: (240px - 8px паддінгу) / 2 = 116px */
+    width: 2vw;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 18px;
+
+    /* Центрування тексту */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    color: #a0a0a0; /* Приглушений текст для перегляду */
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    user-select: none; /* Щоб текст не виділявся при кліках */
+
+    /* МАГІЯ: Плавна анімація з ефектом "відскоку" (пружини) */
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* 3. Активний стан - Стан "Редагування" */
+.knob.active {
+    /* Зсуваємо рівно на ширину кнопки */
+    transform: translateX(2.3vw);
+
+    background: #635BFF; /* Ваш фірмовий неоновий фіолетовий/синій */
+    color: #ffffff;
+
+    /* Неонове світіння навколо кнопки і самого тексту */
+    box-shadow: 0 0 15px rgba(99, 91, 255, 0.5);
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.6);
+}
+
+/* Ховер ефект для всього перемикача, щоб показати, що він клікабельний */
+.switch:hover {
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+input {
+    color: whitesmoke;
+    background-color: var(--color-surface, #1e1e1e);
+    border: 2px solid #9c50ff8d;
+    min-height: 25px;
+    padding-left: 10px;
+    border-radius: 5px;
+    width: 100%; /* Інпут займає всю ширину батька */
+    box-sizing: border-box; /* Щоб падінги не ламали ширину */
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+input:disabled {
+    background-color: transparent; /* Прибираємо фон */
+    color: #a0a0a0; /* Робимо текст сірішим */
+    border: 1px dashed rgba(255, 255, 255, 0.2); /* Робимо рамку ледь помітною */
+    cursor: not-allowed;
+}
+
+input:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 255, 65, 0.5),
+    0 0 15px rgba(0, 255, 65, 0.4);
+}
+
+select:disabled {
+    background-color: transparent; /* Прибираємо фон */
+    color: #a0a0a0; /* Робимо текст сірішим */
+    border: 1px dashed rgba(255, 255, 255, 0.2); /* Робимо рамку ледь помітною */
+    cursor: not-allowed;
+}
+
+select:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 255, 65, 0.5),
+    0 0 15px rgba(0, 255, 65, 0.4);
+}
+
+.buttons {
+    margin-right: 2vw;
+}
+
+.cancel-btn {
+    background-color: transparent;
+    border: 2px solid red;
+    border-radius: 5px;
+    padding: 5px;
+    color: whitesmoke;
+    width: 83px;
+    height: 32px;
+}
+
+.save-btn {
+    background-color: #9c50ff;
+    border-radius: 5px;
+    border: 3px solid green;
+    color: whitesmoke;
+    padding: 5px;
+    width: 83px;
+    height: 32px;
+    margin-left: 1vw;
+}
+
+/* Додаємо курсор-руку і легке затемнення при наведенні ТІЛЬКИ в режимі редагування */
+.item-img.clickable {
+    cursor: pointer;
+    transition: opacity 0.3s;
+}
+
+.item-img.clickable:hover {
+    opacity: 0.7;
+}
+
+/* Стиль для заглушки (щоб текст був по центру) */
+.placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #a0a0a0;
+    font-size: 1.2vw;
+    background: #1e1e1e;
+    border: 2px dashed #9c50ff8d; /* Робимо пунктирну рамку для заглушки */
+}

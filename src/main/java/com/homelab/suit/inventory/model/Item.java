@@ -50,7 +50,7 @@ public class Item {
 
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(columnDefinition = "jsonb")
-    private Map<String, Object> parameters; // 9
+    private Map<String, String> parameters; // 9
 
     private String serialNumber; // 10
 

@@ -1,11 +1,11 @@
 <template>
-    <Teleport to="body">
-      <Transition name="modal-fade">
-      
+  <Teleport to="body">
+    <Transition name="modal-fade">
+
       <div v-if="isOpen" class="modal-backdrop" @click.self="closeModal">
-        
+
         <div class="modal-card">
-          
+
           <header class="modal-header">
             <h3>Додати компонент</h3>
             <button class="close-btn" @click="closeModal">✕</button>
@@ -20,24 +20,24 @@
                 <NameFieldComponent/>
               </div>
               <div class="sku-container">
-                <SkuFieldComponent/>  
+                <SkuFieldComponent/>
               </div>
               <div class="type-container">
                 <TypeFieldComponent/>
               </div>
-               <div class="category-container">
+              <div class="category-container">
                 <CategoryFieldComponent/>
               </div>
               <div class="stock-container">
                 <StockFieldComponent/>
               </div>
               <div class="min-stock-container">
-                <MinStockFieldComponent/>
+                <MinStackFieldComponent/>
               </div>
               <div class="units-container">
                 <UnitsOfMeasureComponent/>
               </div>
-             
+
               <div class="package-container">
                 <PakageFieldComponent/>
               </div>
@@ -68,7 +68,7 @@
         </div>
       </div>
     </Transition>
-    </Teleport>
+  </Teleport>
 </template>
 <script setup>
 import ImageFieldComponent from './addComponentModal/ImageFieldComponent.vue';
@@ -76,7 +76,7 @@ import NameFieldComponent from './addComponentModal/NameFieldComponent.vue';
 import SkuFieldComponent from './addComponentModal/SkuFieldComponent.vue';
 import TypeFieldComponent from './addComponentModal/TypeFieldComponent.vue';
 import StockFieldComponent from './addComponentModal/StockFieldComponent.vue';
-import MinStockFieldComponent from './addComponentModal/MinStickFieldComponent.vue';
+import MinStackFieldComponent from './addComponentModal/MinStackFieldComponent.vue';
 import UnitsOfMeasureComponent from './addComponentModal/UnitsOfMeasureComponetn.vue'
 import CategoryFieldComponent from './addComponentModal/CategoryFieldComponent.vue';
 import PakageFieldComponent from './addComponentModal/PackageTypeFieldComponent.vue'
@@ -86,7 +86,7 @@ import ParametersFieldComponent from './addComponentModal/ParametersFieldCompone
 import FileUploadFieldComponent from './addComponentModal/FileUploadFieldComponent.vue';
 import NoteFieldComponent from './addComponentModal/NoteFieldComponent.vue';
 
-const props = defineProps({ isOpen: Boolean })
+const props = defineProps({isOpen: Boolean})
 const emit = defineEmits(['close', 'save'])
 
 const closeModal = () => emit('close')
@@ -97,7 +97,7 @@ const submitForm = () => {
 </script>
 
 <style scoped>
-.btn-cancel{
+.btn-cancel {
   background-color: transparent;
   border: 2px solid red;
   border-radius: 5px;
@@ -106,8 +106,9 @@ const submitForm = () => {
   width: 83px;
   height: 32px;
 }
-.btn-submit{
-  background-color:#9c50ff;
+
+.btn-submit {
+  background-color: #9c50ff;
   border-radius: 5px;
   border: 3px solid green;
   color: whitesmoke;
@@ -115,15 +116,18 @@ const submitForm = () => {
   width: 83px;
   height: 32px;
 }
-.fields-container{
+
+.fields-container {
   display: grid;
   gap: 5px;
   grid-template-columns: repeat(5, 1fr);
 }
-.image-container{
+
+.image-container {
   grid-row-start: span 5;
 }
-.file-container, .parameters-container, .note-container{
+
+.file-container, .parameters-container, .note-container {
   grid-column-start: span 5;
 }
 
@@ -133,6 +137,7 @@ const submitForm = () => {
 .modal-fade-leave-active {
   transition: opacity 0.3s ease;
 }
+
 .modal-fade-enter-from,
 .modal-fade-leave-to {
   opacity: 0;
@@ -174,8 +179,8 @@ const submitForm = () => {
   color: whitesmoke;
 }
 
-h3{
-  margin: 0px;
+h3 {
+  margin: 0;
 }
 
 .close-btn {

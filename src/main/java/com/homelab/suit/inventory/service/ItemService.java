@@ -1,8 +1,6 @@
 package com.homelab.suit.inventory.service;
 
-import com.homelab.suit.inventory.dto.CategoryDto;
-import com.homelab.suit.inventory.dto.LocationDto;
-import com.homelab.suit.inventory.dto.TableItemRequestDto;
+import com.homelab.suit.inventory.dto.*;
 import com.homelab.suit.inventory.exceptions.ItemNotFoundException;
 import com.homelab.suit.inventory.model.Category;
 import com.homelab.suit.inventory.model.Item;
@@ -16,8 +14,11 @@ import lombok.RequiredArgsConstructor;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,28 +29,41 @@ public class ItemService {
     private final ItemRepository itemRepository;
     private final CategoryRepository categoryRepository;
     private final LocationRepository locationRepository;
+    private final ItemUtils itemUtils;
 
     public Page<TableItemRequestDto> getTablePage(Long workspaceId, Pageable pageable){
-        Page<Item> page = itemPagingRepository.findByWorkspaceId(workspaceId, pageable);
-
-        return page.map(this::convertToDto);
+        return itemPagingRepository.findByWorkspaceId(workspaceId, pageable).map(this::convertToDto);
     }
     public Page<TableItemRequestDto> getTablePageBySearchQuery(Long workspaceId, String query, Pageable pageable){
           return itemPagingRepository.findFuzzy(workspaceId, query, pageable).map(this::convertToDto);
     }
 
-    public List<CategoryDto> getCategories(){
-        return categoryRepository.findAll().stream().map(this::convertCategoryToDto).toList();
+    public List<CategoryDto> getCategories(Long workspaceId){
+        return categoryRepository.findByWorkspaceId(workspaceId)
+                .stream().map(this::convertCategoryToDto).toList();
     }
 
-    public List<LocationDto> getLocations(){
-        // TODO add workspace field, and find by location id
-        return locationRepository.findAll().stream().map(this::convertLocationToDto).toList();
+    public List<LocationDto> getLocations(Long workspaceId){
+        return locationRepository.findByWorkspaceId(workspaceId)
+                .stream().map(this::convertLocationToDto).toList();
     }
 
     public Item getItemById(Long id){
         Optional<Item> byId = itemRepository.findById(id);
          return byId.orElseThrow(() -> new ItemNotFoundException("Item with id " + id + " not found"));
+    }
+
+    public void saveNewItem(ItemCreationDto itemDto,
+                                            MultipartFile previewImg,
+                                            List<MultipartFile> documents,
+                                            Principal principal){
+        itemUtils.saveToDatabase(itemDto, previewImg, documents, principal.getName());
+    }
+
+    public void updateItem(ItemUpdateDto itemDto,
+                           MultipartFile previewImg,
+                           List<MultipartFile> documents,Principal principal){
+        itemUtils.updateItem(itemDto, previewImg, documents, principal);
     }
 
     private TableItemRequestDto convertToDto(Item item){

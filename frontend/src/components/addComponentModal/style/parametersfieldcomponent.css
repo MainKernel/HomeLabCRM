@@ -1,0 +1,109 @@
+.field-holder{
+    border: 2px dashed black;
+    border-radius: 10px;
+    padding: 5px;
+}
+.add-parameter-box{
+    margin-top: 5px;
+    width: 100%;
+}
+/* Обгортка, яка буде "світитися" і крутитися */
+.input-wrapper {
+    position: relative;
+    display: inline-block;
+    padding: 2px; /* Це буде товщина вашої анімованої рамки */
+    border-radius: 6px; /* Заокруглення зовнішнє */
+    overflow: hidden;
+    width: 100%;
+    /* Базовий колір рамки, якщо анімація не встигла завантажитись */
+    background: #9D50FF;
+}
+
+/* Сам градієнт, який крутиться на задньому фоні обгортки */
+.input-wrapper::before {
+    content: "";
+    position: absolute;
+    /* Задаємо фіксований великий розмір, щоб це був ідеальний квадрат */
+    width: 1000px;
+    height: 1000px;
+    /* Центруємо його рівно посередині інпута */
+    top: 50%;
+    left: 50%;
+    /* Робимо плавніший хвіст градієнта для кращого кіберпанк-ефекту */
+    background: conic-gradient(from 0deg, transparent 60%, transparent 80%, #ff007a 100%);
+    z-index: 0;
+    /* Анімація */
+    animation: rotate 4s linear infinite;
+}
+
+@keyframes rotate {
+    from {
+        /* Обов'язково додаємо translate(-50%, -50%), щоб вісь обертання була строго по центру */
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+.input-wrapper input {
+    position: relative; /* Щоб інпут був ПОВЕРХ градієнта */
+    z-index: 1;
+    background-color: var(--color-surface, #1e1e1e); /* Темний фон, який перекриває центр градієнта */
+    color: white;
+    border: none; /* Прибираємо стандартну рамку */
+    border-radius: 4px; /* Заокруглення внутрішнє */
+    padding: 8px 12px;
+    outline: none;
+    width: 100%;
+    box-sizing: border-box;
+}
+.parameters-list{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    max-height: 93px; /* Обмеження висоти (~3 рядки) */
+    overflow-y: auto;  /* Вмикаємо прокрутку, якщо карток більше */
+    padding-right: 8px; /* Робимо відступ, щоб скролбар не налізав на текст */
+    align-content: start;
+}
+.parameter-card{
+    display: flex;
+    justify-content: space-between;
+    padding: 8px;
+    margin-right: 10px;
+    margin-left: 2px;
+    margin-top: 3px;
+    margin-bottom: 5px;
+    border-radius: 4px;
+    box-shadow: 0 0 3px rgb(157, 80, 255), 0 0 3px #9D50FF
+}
+
+.parameter-card:hover{
+    background-color: rgba(157, 80, 255, 0.879);
+}
+
+.parameter-holder{
+    display: flex;
+    font-weight: 900;
+}
+.del-btn{
+    background-color: red;
+    border: none;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 20%;
+    font-weight: 800;
+}
+.del-btn:hover{
+    scale: 0.95;
+}
+.add-btn{
+    background-color: #9D50FF;
+    border: none;
+    filter: drop-shadow(2px 2px black);
+    font-weight: 500;
+    border-radius: 5px;
+}
+.add-btn:hover{
+    scale: 0.95;
+}

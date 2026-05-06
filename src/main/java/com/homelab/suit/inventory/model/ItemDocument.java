@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.OffsetDateTime;
+import java.util.UUID;
 
 @Entity
 @Table(name = "item_documents")
@@ -25,16 +26,15 @@ public class ItemDocument {
     @Column(name = "file_url", nullable = false, length = 500)
     private String fileUrl; // Шлях до файлу на диску або посилання
 
-    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private String fileUuid;
+
     @Column(name = "document_type")
-    private DocumentType documentType;
+    private String documentType;
 
     @Column(name = "uploaded_at", nullable = false, updatable = false)
     private OffsetDateTime uploadedAt;
 
-    /**
-     * Життєвий цикл JPA: автоматично встановлюємо дату завантаження перед збереженням
-     */
     @PrePersist
     protected void onCreate() {
         this.uploadedAt = OffsetDateTime.now();

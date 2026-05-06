@@ -1,13 +1,13 @@
 <template>
-    <select v-model="selectedWorkspaceId" @change="onWorkspaceChange">
-    <option class="drop" v-for="workspace in workspaces" :key="workspace.id" :value="workspace.id">
+  <select v-model="selectedWorkspaceId" @change="onWorkspaceChange">
+    <option v-for="workspace in workspaces" :key="workspace.id" :value="workspace.id" class="drop">
       {{ workspace.name }}
     </option>
   </select>
 </template>
 <script setup>
 
-import { ref, onMounted } from 'vue'
+import {onMounted, ref} from 'vue'
 import api from '@/api/axiosInstance'
 
 const workspaces = ref([])
@@ -16,12 +16,12 @@ const selectedWorkspaceId = ref(null)
 // 1. Завантаження даних
 const loadWorkspaces = async () => {
   try {
-    const response = await api.get('/users/workspaces') 
+    const response = await api.get('/workspaces')
     workspaces.value = response.data
 
     // 2. Логіка початкового вибору
     const savedId = localStorage.getItem('workspaceId')
-    
+
     if (savedId) {
       // Якщо в пам'яті вже є ID, перетворюємо його на число і вибираємо
       selectedWorkspaceId.value = Number(savedId)
@@ -38,7 +38,7 @@ const loadWorkspaces = async () => {
 // 3. Збереження при кліку (зміні вибору)
 const onWorkspaceChange = () => {
   localStorage.setItem('workspaceId', selectedWorkspaceId.value)
-  
+
   // Щоб нові запити (наприклад, таблиця) підхопили новий ID, 
   // найпростіше перезавантажити сторінку:
   window.location.reload()
@@ -50,7 +50,7 @@ onMounted(() => {
 </script>
 
 <style scoped>
-select{
+select {
   background-color: transparent;
   color: var(--color-warning);
   border-color: transparent;
@@ -58,7 +58,7 @@ select{
 
 }
 
-.drop{
+.drop {
   background-color: var(--color-surface);
   color: var(--color-text);
 }

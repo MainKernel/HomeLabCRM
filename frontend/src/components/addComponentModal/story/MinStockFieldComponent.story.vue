@@ -1,16 +1,16 @@
 <script setup>
-import MinStickFieldComponent from '../MinStickFieldComponent.vue';
+import MinStackFieldComponent from '../MinStackFieldComponent.vue';
 </script>
 
 <template>
   <Story title="Form / Min Stock Field Component">
     
     <Variant title="Default">
-      <MinStickFieldComponent />
+      <MinStackFieldComponent />
     </Variant>
 
     <Variant title="With Error">
-      <MinStickFieldComponent :hasError="true" errorMessage="Назва обов'язкова" />
+      <MinStackFieldComponent :hasError="true" errorMessage="Назва обов'язкова" />
     </Variant>
 
   </Story>

@@ -7,7 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.time.OffsetDateTime;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -27,7 +27,8 @@ public class User implements UserDetails {
     private String passwordHash;
 
     @Column(nullable = false)
-    private String role; // Наприклад: "ROLE_USER" або "ROLE_ADMIN"
+    @Enumerated(EnumType.STRING)
+    private Role role; // Наприклад: "ROLE_USER" або "ROLE_ADMIN"
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
@@ -37,7 +38,7 @@ public class User implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         // Перетворюємо наш рядок role на об'єкт, який розуміє Spring
-        return List.of(new SimpleGrantedAuthority(role));
+        return List.of(new SimpleGrantedAuthority(role.name()));
     }
 
     @Override

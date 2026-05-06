@@ -65,9 +65,9 @@ INSERT INTO inventory_logs (item_id, change_type, quantity_changed, unit_price, 
 -- ==========================================
 -- 8. ДОДАВАННЯ ДОКУМЕНТІВ ДО ТОВАРІВ
 -- ==========================================
-INSERT INTO item_documents (item_id, title, file_url, document_type, uploaded_at) VALUES
-(1, 'LM317 Datasheet', 'https://www.ti.com/lit/ds/symlink/lm317.pdf', 'DATASHEET', CURRENT_TIMESTAMP),
-(2, 'Інструкція UNI-T', 'https://example.com/manual.pdf', 'MANUAL', CURRENT_TIMESTAMP);
+INSERT INTO item_documents (item_id, title, file_url, file_uuid, document_type, uploaded_at) VALUES
+(1, 'LM317 Datasheet', 'https://www.ti.com/lit/ds/symlink/lm317.pdf', 'uuid-0123', 'DATASHEET', CURRENT_TIMESTAMP),
+(2, 'Інструкція UNI-T', 'https://example.com/manual.pdf', 'uuid-0124', 'MANUAL', CURRENT_TIMESTAMP);
 
 -- ==========================================
 -- 9. ВАЖЛИВО: ОНОВЛЕННЯ ПОСЛІДОВНОСТЕЙ (SEQUENCES)

@@ -1,0 +1,109 @@
+/* 1. Головна обгортка (працює так само, як .input-wrapper у батька) */
+.input-group {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 2. Обгортка виключно для інпута і списку (для позиціонування absolute) */
+.input-wrapper {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 3. Лейбл - ідеально матчить батьківський */
+label {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin: 0.4vw;
+    color: whitesmoke;
+}
+
+/* 4. Сам інпут */
+input {
+    color: whitesmoke;
+    background-color: var(--color-surface, #1e1e1e);
+    border: 2px solid #9c50ff8d;
+    border-radius: 5px;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 1rem;
+    font-weight: bold;
+    height: 2.3vw; /* Фіксована висота, як у всіх інших */
+    padding-left: 10px;
+    transition: all 0.3s ease; /* Плавна зміна при блокуванні */
+}
+
+/* 5. Ефект фокусу (зелене неонове світіння) */
+input:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 255, 65, 0.5), 0 0 15px rgba(0, 255, 65, 0.4);
+    border-color: rgba(0, 255, 65, 0.8); /* Трохи підсвічуємо рамку */
+}
+
+/* 6. ВАЖЛИВО: Стан, коли поле заблоковано (Режим перегляду) */
+input:disabled {
+    background-color: transparent; /* Прибираємо фон */
+    color: #a0a0a0; /* Робимо текст сірішим */
+    border: 1px dashed rgba(255, 255, 255, 0.2); /* Робимо рамку ледь помітною */
+    cursor: not-allowed;
+}
+
+small {
+    color: rgba(0, 255, 65, 0.9);
+    margin-top: 4px;
+    margin-left: 5px;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+/* --- МАГІЯ ВИПАДАЮЧОГО СПИСКУ --- */
+.dropdown-list {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    margin: 4px 0 0 0;
+    padding: 0;
+    background-color: #1E293B;
+    border: 1px solid #9D50FF;
+    border-radius: 6px;
+    max-height: 200px;
+    overflow-y: auto;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+.dropdown-list li {
+    color: whitesmoke;
+    list-style: none;
+    padding: 8px 10px;
+    cursor: pointer;
+    border-bottom: 1px dashed rgba(156, 80, 255, 0.3);
+    transition: background-color 0.2s;
+}
+
+.dropdown-list li:last-child {
+    border-bottom: none;
+}
+
+.dropdown-list li:hover {
+    background-color: rgba(157, 80, 255, 0.2);
+    color: #9D50FF;
+}
+
+/* Кастомізація скроллбару для списку (щоб було стильно) */
+.dropdown-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.dropdown-list::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.dropdown-list::-webkit-scrollbar-thumb {
+    background: #9c50ff8d;
+    border-radius: 3px;
+}

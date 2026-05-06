@@ -4,6 +4,7 @@
 CREATE TABLE categories (
     id BIGSERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
+    workspace_id BIGINT,
     parent_id BIGINT,
     CONSTRAINT fk_category_parent FOREIGN KEY (parent_id) REFERENCES categories (id) ON DELETE SET NULL
 );
@@ -28,7 +29,6 @@ CREATE TABLE items (
     parameters JSONB,                               -- 9. Параметри
     serial_number VARCHAR(255),                     -- 10. Серійний номер (якщо UNIQUE)
     note TEXT,                                      -- 13. Примітка
-
     type VARCHAR(50) NOT NULL,                      -- REGULAR або UNIQUE
     total_quantity NUMERIC(38,2) NOT NULL DEFAULT 0, -- Загальна кількість зараз
 
@@ -56,6 +56,7 @@ CREATE TABLE inventory_logs (                       -- 12. Ціна та 14. І�
     id BIGSERIAL PRIMARY KEY,
     item_id BIGINT NOT NULL,
     change_type VARCHAR(50) NOT NULL,               -- IN (прихід), OUT (витрата), AUDIT (корекція)
+    changed_by VARCHAR(500),
     quantity_changed NUMERIC(10, 2) NOT NULL,       -- Скільки додано/віднято
     unit_price NUMERIC(10, 2),                      -- Ціна за одиницю в цій партії
     total_price NUMERIC(10, 2),                     -- Загальна вартість партії
